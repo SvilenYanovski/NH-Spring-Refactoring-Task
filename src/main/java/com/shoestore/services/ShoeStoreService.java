@@ -34,50 +34,50 @@ public class ShoeStoreService {
 		}
 	}
 	
-//	public long bumpVersion(Order order, long currentVersion) {
-//		if (currentVersion != order.version)
-//			return ERROR_INCONSISTENT_VERSIONS_HISTORY;
-//		else {
-//			order.getVersion() = currentVersion + 1;
-//			return order.version;
-//		}
-//	}
-//
-//    public long addToCart(Order order, OrderItem orderItem) {
-//    	if (order.status != OrderStatus.SHOPPING_CART) return Order.ERROR_INVALID_ORDER_STATUS;
-//		return order.items.add(orderItem) ? 0 : -100;
-//	}
-//
-//    public long removeFromCart(Order order, OrderItem orderItem) {
-//    	if (order.status != OrderStatus.SHOPPING_CART) return Order.ERROR_INVALID_ORDER_STATUS;
-//		return order.items.remove(orderItem) ? 0 : -100;
-//	}
-//
-//	public long checkoutOrder(Order order) {
-//		if (order.status != OrderStatus.SHOPPING_CART) return Order.ERROR_INVALID_ORDER_STATUS;
-//		order.status = OrderStatus.CHECKED_OUT;
-//		return 0;
-//		//IGNORE: unfinished implementation
-//	}
-//
-//	public long shipOrder(Order order) {
-//		if (order.status != OrderStatus.CHECKED_OUT) return Order.ERROR_INVALID_ORDER_STATUS;
-//		order.status = OrderStatus.SHIPPING;
-//		//IGNORE: unfinished implementation
-//		return 0;
-//	}
-//
-//	public long completeOrder(Order order) {
-//		if (order.status != OrderStatus.SHIPPING) return Order.ERROR_INVALID_ORDER_STATUS;
-//		order.status = OrderStatus.CLOSED;
-//		//IGNORE: unfinished implementation
-//		return 0;
-//	}
-//
-//	public List<OrderItem> cancelOrder(Order order) {
-//		if (order.status != OrderStatus.SHOPPING_CART) return null;
-//		order.status = OrderStatus.CANCELED;
-//		//IGNORE: unfinished implementation
-//		return order.items;
-//	}
+	public long bumpVersion(Order order, long currentVersion) {
+		if (currentVersion != order.getVersion())
+			return ERROR_INCONSISTENT_VERSIONS_HISTORY;
+		else {
+			order.setVersion(currentVersion + 1);
+			return order.getVersion();
+		}
+	}
+
+    public long addToCart(Order order, OrderItem orderItem) {
+    	if (order.getStatus() != OrderStatus.SHOPPING_CART) return ERROR_INVALID_ORDER_STATUS;
+		return order.getItems().add(orderItem) ? 0 : -100;
+	}
+
+    public long removeFromCart(Order order, OrderItem orderItem) {
+    	if (order.getStatus() != OrderStatus.SHOPPING_CART) return ERROR_INVALID_ORDER_STATUS;
+		return order.getItems().remove(orderItem) ? 0 : -100;
+	}
+
+	public long checkoutOrder(Order order) {
+		if (order.getStatus() != OrderStatus.SHOPPING_CART) return ERROR_INVALID_ORDER_STATUS;
+		order.setStatus(OrderStatus.CHECKED_OUT);
+		return 0;
+		//IGNORE: unfinished implementation
+	}
+
+	public long shipOrder(Order order) {
+		if (order.getStatus() != OrderStatus.CHECKED_OUT) return ERROR_INVALID_ORDER_STATUS;
+		order.setStatus(OrderStatus.SHIPPING);
+		//IGNORE: unfinished implementation
+		return 0;
+	}
+
+	public long completeOrder(Order order) {
+		if (order.getStatus() != OrderStatus.SHIPPING) return ERROR_INVALID_ORDER_STATUS;
+		order.setStatus(OrderStatus.CLOSED);
+		//IGNORE: unfinished implementation
+		return 0;
+	}
+
+	public List<OrderItem> cancelOrder(Order order) {
+		if (order.getStatus() != OrderStatus.SHOPPING_CART) return null;
+		order.setStatus(OrderStatus.CANCELED);
+		//IGNORE: unfinished implementation
+		return order.getItems();
+	}
 }

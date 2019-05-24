@@ -1,7 +1,12 @@
 package com.shoestore.entities;
 
+import lombok.Data;
+
+import javax.persistence.Entity;
 import java.util.HashMap;
 
+@Data
+@Entity
 public class ShoeInventory {
 	private static final int INITIAL_AVAILABILITY = 0;
 	private static final int[] SHOE_SIZES = new int[] {
