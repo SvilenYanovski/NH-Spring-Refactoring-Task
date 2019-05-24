@@ -1,4 +1,4 @@
-package com.shoestore.domain;
+package com.shoestore.entities;
 
 public enum OrderStatus {
 	SHOPPING_CART,

@@ -1,32 +1,25 @@
-package com.shoestore.rest;
+package com.shoestore.controllers;
 
-import javax.websocket.server.PathParam;
-
+import com.shoestore.repositories.OrderRepository;
+import com.shoestore.repositories.ShoeRepository;
+import com.shoestore.services.ShoeStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.shoestore.domain.Order;
-import com.shoestore.domain.ShoeInventory;
-import com.shoestore.domain.ShoePair;
-import com.shoestore.domain.Shopper;
-import com.shoestore.repo.OrderRepo;
-import com.shoestore.repo.ShoeInventoryRepo;
-import com.shoestore.service.ShoeStoreService;
-
-@Service
-public class OrderRestService {
+@RestController
+public class OrderController {
 	
-//	@Autowired
-//	private OrderRepo orderRepo;
-//	@Autowired
-//	private ShoeInventoryRepo inventoryRepo;
-//	@Autowired
-//	private ShoeStoreService shoeStoreService;
-//
+	@Autowired
+	private OrderRepository orderRepository;
+	@Autowired
+	private ShoeRepository shoeRepository;
+	@Autowired
+	private ShoeStoreService shoeStoreService;
+
 //	@GET
 //	@Path("orders/{shopperId}")
 //	public Order getOrder(@PathParam("shopperId") long shopperId) {
-//		Order order = orderRepo.getOrderByShopperId(shopperId);
+//		Order order = orderRepository.getOrderByShopperId(shopperId);
 //		if (order != null) return order;
 //		return new Order(new Shopper(shopperId));
 //	}
@@ -46,7 +39,7 @@ public class OrderRestService {
 //		if (inventory == null) {
 //			return null;
 //		} else {
-//			Order order = orderRepo.getOrderByShopperId(shopperId);
+//			Order order = orderRepository.getOrderByShopperId(shopperId);
 //			if (order == null) {
 //				return null;
 //			} else {
@@ -56,7 +49,7 @@ public class OrderRestService {
 //				shoeStoreService.addToCart(order, shoePair);
 //
 //				inventoryRepo.commit(inventory);
-//				return orderRepo.commit(order);
+//				return orderRepository.commit(order);
 //			}
 //		}
 //	}

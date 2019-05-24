@@ -1,15 +1,15 @@
-package com.shoestore.domain;
+package com.shoestore.entities;
 
 public class ShoePair extends OrderItem {
-	private ShoeModel model;
+	private Shoe model;
 	private int shoeSize;
 	
-	public ShoePair(ShoeModel model, int size) {
+	public ShoePair(Shoe model, int size) {
 		this.model = model;
 		this.shoeSize = size;
 	}
 	
-	public ShoeModel getModel() {
+	public Shoe getModel() {
 		return model;
 	}
 
