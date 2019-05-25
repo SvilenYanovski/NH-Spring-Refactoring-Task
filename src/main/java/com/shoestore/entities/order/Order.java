@@ -1,5 +1,7 @@
-package com.shoestore.entities;
+package com.shoestore.entities.order;
 
+import com.shoestore.entities.BaseEntity;
+import com.shoestore.entities.shopper.Shopper;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,11 +10,8 @@ import java.util.List;
 
 @Data
 @Entity
-public class Order {
+public class Order extends BaseEntity {
 
-	@Id
-	@GeneratedValue
-	private Long id;
 	@ManyToOne
 	private Shopper shopper;
 	@OneToMany

@@ -1,17 +1,14 @@
-package com.shoestore.entities;
+package com.shoestore.entities.shopper;
 
+import com.shoestore.entities.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Data
 @Entity
-public class Shopper {
-	@Id
-	@GeneratedValue
-	private long id;
+public class Shopper  extends BaseEntity {
+
 	private String username;
 
 	public Shopper() {}

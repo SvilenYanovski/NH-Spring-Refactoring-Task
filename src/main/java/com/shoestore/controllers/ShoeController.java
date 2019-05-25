@@ -1,7 +1,6 @@
 package com.shoestore.controllers;
 
-import com.shoestore.ShoeStoreApplication;
-import com.shoestore.entities.Shoe;
+import com.shoestore.entities.shoe.Shoe;
 import com.shoestore.repositories.ShoeRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/shoe")
+@RequestMapping("api/shoe")
 public class ShoeController {
 
     private static final Logger LOGGER = LogManager.getLogger(ShoeController.class);

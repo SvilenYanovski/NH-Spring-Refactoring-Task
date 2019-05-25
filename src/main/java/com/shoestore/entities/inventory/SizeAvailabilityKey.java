@@ -1,4 +1,4 @@
-package com.shoestore.entities;
+package com.shoestore.entities.inventory;
 
 import lombok.Data;
 

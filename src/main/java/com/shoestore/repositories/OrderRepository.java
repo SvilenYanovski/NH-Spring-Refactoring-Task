@@ -1,8 +1,10 @@
 package com.shoestore.repositories;
 
-import com.shoestore.entities.Order;
+import com.shoestore.entities.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    public Order findByShopperId(Long shopperId);
+    Optional<Order> findByShopperId(Long shopperId);
 }

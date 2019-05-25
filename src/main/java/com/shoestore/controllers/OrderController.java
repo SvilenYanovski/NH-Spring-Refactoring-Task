@@ -1,8 +1,8 @@
 package com.shoestore.controllers;
 
-import com.shoestore.entities.Order;
-import com.shoestore.entities.ShoeInventory;
-import com.shoestore.entities.ShoePair;
+import com.shoestore.entities.order.Order;
+import com.shoestore.entities.inventory.ShoeInventory;
+import com.shoestore.entities.shoe.ShoePair;
 import com.shoestore.repositories.OrderRepository;
 import com.shoestore.repositories.ShoeInventoryRepository;
 import com.shoestore.repositories.ShopperRepository;
@@ -28,23 +28,23 @@ public class OrderController {
 
 	@GetMapping("{shopperId}")
 	public Order getOrder(@PathParam("shopperId") long shopperId) {
-		Order order = orderRepository.findByShopperId(shopperId);
+		Order order = orderRepository.findByShopperId(shopperId).orElse(null);
 		if (order != null) return order;
 		return new Order(shopperRepository.getOne(shopperId));
 	}
 
 	@GetMapping("{shopperId}/total")
 	public Double getTotalPrice(@PathParam("shopperId") long shopperId) {
-		return orderRepository.findByShopperId(shopperId).getPrice();
+		return orderRepository.findByShopperId(shopperId).map(Order::getPrice).orElse(0.0);
 	}
 
 	@PutMapping(value = "{shopperId}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Order addShoePair(@PathParam("shopperId") long shopperId, ShoePair shoePair) {
-		ShoeInventory inventory = inventoryRepository.findByShoeId(shoePair.getModel().getId());
+		ShoeInventory inventory = inventoryRepository.findByShoe(shoePair.getShoe()).orElse(null);
 		if (inventory == null) {
 			return null;
 		} else {
-			Order order = orderRepository.findByShopperId(shopperId);
+			Order order = orderRepository.findByShopperId(shopperId).orElse(null);
 			if (order == null) {
 				return null;
 			} else {

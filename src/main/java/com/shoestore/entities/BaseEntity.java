@@ -8,8 +8,8 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public abstract class OrderItem {
-	@Id
-	@GeneratedValue
-	private long id;
+public abstract class BaseEntity {
+    @Id
+    @GeneratedValue
+    private Long id;
 }

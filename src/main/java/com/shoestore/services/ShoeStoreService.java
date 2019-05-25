@@ -1,36 +1,69 @@
 package com.shoestore.services;
 
+import java.util.Arrays;
 import java.util.List;
 
+import com.shoestore.constants.Constants;
+import com.shoestore.entities.inventory.ShoeAvailability;
+import com.shoestore.entities.inventory.ShoeInventory;
+import com.shoestore.entities.order.Order;
+import com.shoestore.entities.order.OrderItem;
+import com.shoestore.entities.order.OrderStatus;
+import com.shoestore.entities.shoe.Shoe;
+import com.shoestore.entities.shoe.ShoeSize;
+import com.shoestore.repositories.ShoeInventoryRepository;
+import com.shoestore.repositories.ShoeSizeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.shoestore.entities.Order;
-import com.shoestore.entities.OrderItem;
-import com.shoestore.entities.OrderStatus;
-import com.shoestore.entities.ShoeInventory;
 
 import static com.shoestore.constants.Constants.*;
 
 @Service
 public class ShoeStoreService {
 
-	public long depositPairs(ShoeInventory inventory, int shoeSize, int additionalPairs) {
-		if (!inventory.availability.containsKey(shoeSize)) {
+	@Autowired
+	private ShoeInventoryRepository shoeInventoryRepository;
+
+	@Autowired
+	private ShoeSizeRepository shoeSizeRepository;
+
+	public long depositPairs(Shoe shoe, Integer shoeSize, Integer additionalPairs) {
+		ShoeInventory inventory = shoeInventoryRepository.findByShoe(shoe).orElse(null);
+		if(null==inventory){
+			return ERROR_OUT_OF_STOCK;
+		}
+
+		if (Arrays.stream(Constants.SizeEnum.values()).noneMatch(o -> shoeSize.equals(o.label))) {
 			return ERROR_INVALID_SHOE_SIZE;
-		} else if (additionalPairs <=0 ) { 
+		} else if (additionalPairs <= 0 ) {
 			return ERROR_NEGATIVE_DEPOSIT_AMOUNT;
 		} else {
-			return inventory.availability.put(shoeSize, inventory.availability.get(shoeSize) + additionalPairs);
+			ShoeAvailability availability = inventory.getShoeAvailability()
+					.stream()
+					.filter(o->o.getShoeSize().getCode().equals(shoeSize))
+					.findFirst()
+					.orElse(null);
+			if(null==availability){
+				return ERROR_ENTITY_NOT_FOUND;
+			}
+			availability.setAvailability(availability.getAvailability() + additionalPairs);
+			return null != shoeInventoryRepository.save(inventory) ? SUCCESS : UNKNOWN_ERROR;
 		}
 	}
-	
-	public long reservePair(ShoeInventory inventory, int shoeSize) {
-		if (!inventory.availability.containsKey(shoeSize)) {
+
+	public long reservePair(ShoeInventory inventory, ShoeSize shoeSize) {
+		ShoeAvailability availability = inventory.getShoeAvailability()
+				.stream()
+				.filter(o->o.getShoeSize().getCode().equals(shoeSize))
+				.findFirst()
+				.orElse(null);
+		if (Arrays.stream(Constants.SizeEnum.values()).noneMatch(o -> shoeSize.equals(o.label))) {
 			return ERROR_INVALID_SHOE_SIZE;
-		} else if (inventory.availability.get(shoeSize) ==0 ) { 
+		} else if (null==availability || availability.getAvailability().equals(shoeSize.getCode())) {
 			return ERROR_OUT_OF_STOCK;
 		} else {
-			return inventory.availability.put(shoeSize, inventory.availability.get(shoeSize) - 1);
+			availability.setAvailability(availability.getAvailability() - 1);
+			return null != shoeInventoryRepository.save(inventory) ? SUCCESS : UNKNOWN_ERROR;
 		}
 	}
 	
