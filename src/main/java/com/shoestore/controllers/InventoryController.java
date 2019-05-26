@@ -18,8 +18,11 @@ public class InventoryController {
 
     private static final Logger LOGGER = LogManager.getLogger(InventoryController.class);
 
-    @Autowired
-    private ShoeInventoryService shoeInventoryService;
+    private final ShoeInventoryService shoeInventoryService;
+
+    public InventoryController(ShoeInventoryService shoeInventoryService) {
+        this.shoeInventoryService = shoeInventoryService;
+    }
 
     @GetMapping("/all")
     List<ShoeInventory> all() {

@@ -1,7 +1,7 @@
 package com.shoestore.controllers;
 
 import com.shoestore.entities.shoe.Shoe;
-import com.shoestore.repositories.ShoeRepository;
+import com.shoestore.services.ShoeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,15 @@ public class ShoeController {
 
     private static final Logger LOGGER = LogManager.getLogger(ShoeController.class);
 
-    @Autowired
-    private ShoeRepository shoeRepository;
+    private final ShoeService shoeService;
+
+    public ShoeController(ShoeService shoeService) {
+        this.shoeService = shoeService;
+    }
 
     @GetMapping("/all")
     List<Shoe> all() {
         LOGGER.info("Fetching all shoes.");
-        return shoeRepository.findAll();
+        return shoeService.getAll();
     }
 }

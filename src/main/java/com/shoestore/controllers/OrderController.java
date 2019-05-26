@@ -1,13 +1,8 @@
 package com.shoestore.controllers;
 
 import com.shoestore.entities.order.Order;
-import com.shoestore.entities.inventory.ShoeInventory;
 import com.shoestore.entities.shoe.ShoePair;
-import com.shoestore.repositories.OrderRepository;
-import com.shoestore.repositories.ShoeInventoryRepository;
-import com.shoestore.repositories.ShopperRepository;
-import com.shoestore.services.ShoeStoreService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.shoestore.services.OrderService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,59 +11,35 @@ import javax.websocket.server.PathParam;
 @RestController
 @RequestMapping("/order")
 public class OrderController {
-	
-	@Autowired
-	private OrderRepository orderRepository;
-	@Autowired
-	private ShopperRepository shopperRepository;
-	@Autowired
-	private ShoeInventoryRepository inventoryRepository;
-	@Autowired
-	private ShoeStoreService shoeStoreService;
+
+	private final OrderService orderService;
+
+	public OrderController(OrderService orderService) {
+		this.orderService = orderService;
+	}
 
 	@GetMapping("{shopperId}")
 	public Order getOrder(@PathParam("shopperId") long shopperId) {
-		Order order = orderRepository.findByShopperId(shopperId).orElse(null);
-		if (order != null) return order;
-		return new Order(shopperRepository.getOne(shopperId));
+		return orderService.getOrder(shopperId);
 	}
 
 	@GetMapping("{shopperId}/total")
 	public Double getTotalPrice(@PathParam("shopperId") long shopperId) {
-		return orderRepository.findByShopperId(shopperId).map(Order::getPrice).orElse(0.0);
+		return orderService.getTotalPrice(shopperId);
 	}
 
 	@PutMapping(value = "{shopperId}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Order addShoePair(@PathParam("shopperId") long shopperId, ShoePair shoePair) {
-		ShoeInventory inventory = inventoryRepository.findByShoe(shoePair.getShoe()).orElse(null);
-		if (inventory == null) {
-			return null;
-		} else {
-			Order order = orderRepository.findByShopperId(shopperId).orElse(null);
-			if (order == null) {
-				return null;
-			} else {
-				long errorCode = shoeStoreService.reservePair(inventory, shoePair.getShoeSize());
-				if (errorCode < 0) return null;
-
-				shoeStoreService.addToCart(order, shoePair);
-
-				inventoryRepository.save(inventory);
-				return orderRepository.save(order);
-			}
-		}
+		return orderService.addShoePair(shopperId, shoePair);
 	}
 
 	@PostMapping(value = "{shopperId}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Order updateShoePair(@PathParam("shopperId") long shopperId, ShoePair shoePair) {
-		//IGNORE: to be implemented
-		return null;
+		return orderService.updateShoePair(shopperId, shoePair);
 	}
 
 	@DeleteMapping(value = "{shopperId}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Order removeShoePair(@PathParam("shopperId") long shopperId, ShoePair shoePair) {
-		//IGNORE: to be implemented
-		return null;
+		return orderService.removeShoePair(shopperId, shoePair);
 	}
-	
 }

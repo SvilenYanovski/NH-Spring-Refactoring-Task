@@ -1,4 +1,4 @@
-package com.shoestore.services;
+package com.shoestore.services.impl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,21 +12,22 @@ import com.shoestore.entities.order.OrderStatus;
 import com.shoestore.entities.shoe.Shoe;
 import com.shoestore.entities.shoe.ShoeSize;
 import com.shoestore.repositories.ShoeInventoryRepository;
-import com.shoestore.repositories.ShoeSizeRepository;
+import com.shoestore.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.shoestore.constants.Constants.*;
 
 @Service
-public class ShoeStoreService {
+public class CartServiceImpl implements CartService {
 
-	@Autowired
-	private ShoeInventoryRepository shoeInventoryRepository;
+	private final ShoeInventoryRepository shoeInventoryRepository;
 
-	@Autowired
-	private ShoeSizeRepository shoeSizeRepository;
+	public CartServiceImpl(ShoeInventoryRepository shoeInventoryRepository) {
+		this.shoeInventoryRepository = shoeInventoryRepository;
+	}
 
+	@Override
 	public long depositPairs(Shoe shoe, Integer shoeSize, Integer additionalPairs) {
 		ShoeInventory inventory = shoeInventoryRepository.findByShoe(shoe).orElse(null);
 		if(null==inventory){
@@ -51,6 +52,7 @@ public class ShoeStoreService {
 		}
 	}
 
+	@Override
 	public long reservePair(ShoeInventory inventory, ShoeSize shoeSize) {
 		ShoeAvailability availability = inventory.getShoeAvailability()
 				.stream()
@@ -67,6 +69,7 @@ public class ShoeStoreService {
 		}
 	}
 	
+	@Override
 	public long bumpVersion(Order order, long currentVersion) {
 		if (currentVersion != order.getVersion())
 			return ERROR_INCONSISTENT_VERSIONS_HISTORY;
@@ -76,16 +79,19 @@ public class ShoeStoreService {
 		}
 	}
 
-    public long addToCart(Order order, OrderItem orderItem) {
+    @Override
+	public long addToCart(Order order, OrderItem orderItem) {
     	if (order.getStatus() != OrderStatus.SHOPPING_CART) return ERROR_INVALID_ORDER_STATUS;
 		return order.getItems().add(orderItem) ? 0 : -100;
 	}
 
-    public long removeFromCart(Order order, OrderItem orderItem) {
+    @Override
+	public long removeFromCart(Order order, OrderItem orderItem) {
     	if (order.getStatus() != OrderStatus.SHOPPING_CART) return ERROR_INVALID_ORDER_STATUS;
 		return order.getItems().remove(orderItem) ? 0 : -100;
 	}
 
+	@Override
 	public long checkoutOrder(Order order) {
 		if (order.getStatus() != OrderStatus.SHOPPING_CART) return ERROR_INVALID_ORDER_STATUS;
 		order.setStatus(OrderStatus.CHECKED_OUT);
@@ -93,6 +99,7 @@ public class ShoeStoreService {
 		//IGNORE: unfinished implementation
 	}
 
+	@Override
 	public long shipOrder(Order order) {
 		if (order.getStatus() != OrderStatus.CHECKED_OUT) return ERROR_INVALID_ORDER_STATUS;
 		order.setStatus(OrderStatus.SHIPPING);
@@ -100,6 +107,7 @@ public class ShoeStoreService {
 		return 0;
 	}
 
+	@Override
 	public long completeOrder(Order order) {
 		if (order.getStatus() != OrderStatus.SHIPPING) return ERROR_INVALID_ORDER_STATUS;
 		order.setStatus(OrderStatus.CLOSED);
@@ -107,6 +115,7 @@ public class ShoeStoreService {
 		return 0;
 	}
 
+	@Override
 	public List<OrderItem> cancelOrder(Order order) {
 		if (order.getStatus() != OrderStatus.SHOPPING_CART) return null;
 		order.setStatus(OrderStatus.CANCELED);
