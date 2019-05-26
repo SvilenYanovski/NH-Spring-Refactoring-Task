@@ -2,7 +2,6 @@ package com.shoestore.services.impl;
 
 import com.shoestore.dto.ShoeDTO;
 import com.shoestore.dto.converters.ShoeConverter;
-import com.shoestore.entities.shoe.Shoe;
 import com.shoestore.repositories.ShoeRepository;
 import com.shoestore.services.ShoeService;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,6 @@ public class ShoeServiceImpl implements ShoeService {
 
     @Override
     public List<ShoeDTO> getAll() {
-        return shoeConverter.shoesToShoeDTOs(shoeRepository.findAll());
+        return shoeConverter.toDtos(shoeRepository.findAll());
     }
 }

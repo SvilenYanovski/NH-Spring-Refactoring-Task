@@ -1,6 +1,6 @@
 package com.shoestore.entities.shoe;
 
-import com.shoestore.entities.BaseEntity;
+import com.shoestore.entities.BaseIdEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Shoe  extends BaseEntity {
+public class Shoe  extends BaseIdEntity {
 
 	private String name;
 

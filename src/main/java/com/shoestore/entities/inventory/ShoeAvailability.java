@@ -1,6 +1,6 @@
 package com.shoestore.entities.inventory;
 
-import com.shoestore.entities.BaseEntity;
+import com.shoestore.entities.BaseIdEntity;
 import com.shoestore.entities.shoe.ShoeSize;
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 @Data
 @Entity
-public class ShoeAvailability extends BaseEntity {
+public class ShoeAvailability extends BaseIdEntity {
 
     @ManyToOne
     private ShoeSize shoeSize;

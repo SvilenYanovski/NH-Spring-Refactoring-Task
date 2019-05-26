@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class ShoeDTO {
+public class ShoeDTO extends BaseIdDTO{
     private String name;
 
     private String description;
@@ -16,6 +16,7 @@ public class ShoeDTO {
     private List<String> photos;
 
     public ShoeDTO(Shoe shoe) {
+        super(shoe);
         this.name = shoe.getName();
         this.description = shoe.getDescription();
         this.photos = shoe.getPhotos().stream()

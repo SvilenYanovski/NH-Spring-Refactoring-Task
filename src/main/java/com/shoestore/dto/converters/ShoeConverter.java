@@ -7,11 +7,10 @@ import com.shoestore.repositories.PhotoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class ShoeConverter {
+public class ShoeConverter implements BaseConverter<ShoeDTO, Shoe>{
 
     private final PhotoRepository photoRepository;
 
@@ -19,25 +18,13 @@ public class ShoeConverter {
         this.photoRepository = photoRepository;
     }
 
-    public List<ShoeDTO> shoesToShoeDTOs(List<Shoe> shoes) {
-        return shoes.stream()
-                .filter(Objects::nonNull)
-                .map(this::shoeToShoeDTO)
-                .collect(Collectors.toList());
-    }
-
-    public ShoeDTO shoeToShoeDTO(Shoe shoe) {
+    @Override
+    public ShoeDTO toDto(Shoe shoe) {
         return new ShoeDTO(shoe);
     }
 
-    public List<Shoe> shoeDTOsToShoes(List<ShoeDTO> shoeDTOs) {
-        return shoeDTOs.stream()
-                .filter(Objects::nonNull)
-                .map(this::userDTOToUser)
-                .collect(Collectors.toList());
-    }
-
-    public Shoe userDTOToUser(ShoeDTO shoeDTO) {
+    @Override
+    public Shoe toEntity(ShoeDTO shoeDTO) {
         if (shoeDTO == null) {
             return null;
         } else {
@@ -53,6 +40,7 @@ public class ShoeConverter {
             return shoe;
         }
     }
+    @Override
     public Shoe fromId(Long id) {
         if (id == null) {
             return null;

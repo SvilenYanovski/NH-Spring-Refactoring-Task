@@ -1,6 +1,6 @@
 package com.shoestore.entities.inventory;
 
-import com.shoestore.entities.BaseEntity;
+import com.shoestore.entities.BaseIdEntity;
 import com.shoestore.entities.shoe.Shoe;
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class ShoeInventory  extends BaseEntity {
+public class ShoeInventory  extends BaseIdEntity {
 
 	@OneToOne
 	private Shoe shoe;

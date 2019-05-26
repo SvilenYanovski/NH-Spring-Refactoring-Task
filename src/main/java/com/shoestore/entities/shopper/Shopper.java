@@ -1,13 +1,13 @@
 package com.shoestore.entities.shopper;
 
-import com.shoestore.entities.BaseEntity;
+import com.shoestore.entities.BaseIdEntity;
 import lombok.Data;
 
 import javax.persistence.Entity;
 
 @Data
 @Entity
-public class Shopper  extends BaseEntity {
+public class Shopper  extends BaseIdEntity {
 
 	private String username;
 

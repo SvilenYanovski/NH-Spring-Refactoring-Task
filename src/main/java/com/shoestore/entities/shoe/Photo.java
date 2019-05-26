@@ -1,13 +1,13 @@
 package com.shoestore.entities.shoe;
 
-import com.shoestore.entities.BaseEntity;
+import com.shoestore.entities.BaseIdEntity;
 import lombok.Data;
 
 import javax.persistence.Entity;
 
 @Data
 @Entity
-public class Photo  extends BaseEntity {
+public class Photo  extends BaseIdEntity {
 
     private String url;
 

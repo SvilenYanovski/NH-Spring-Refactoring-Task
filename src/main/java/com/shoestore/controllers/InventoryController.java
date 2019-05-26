@@ -1,5 +1,6 @@
 package com.shoestore.controllers;
 
+import com.shoestore.dto.ShoeInventoryDTO;
 import com.shoestore.entities.inventory.ShoeInventory;
 import com.shoestore.services.ShoeInventoryService;
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +26,7 @@ public class InventoryController {
     }
 
     @GetMapping("/all")
-    List<ShoeInventory> all() {
+    List<ShoeInventoryDTO> all() {
         LOGGER.info("Request to load all Shoe Inventories.");
         return shoeInventoryService.getAll();
     }

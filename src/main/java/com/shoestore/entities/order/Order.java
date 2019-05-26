@@ -1,6 +1,6 @@
 package com.shoestore.entities.order;
 
-import com.shoestore.entities.BaseEntity;
+import com.shoestore.entities.BaseIdEntity;
 import com.shoestore.entities.shopper.Shopper;
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Order extends BaseEntity {
+public class Order extends BaseIdEntity {
 
 	@ManyToOne
 	private Shopper shopper;
