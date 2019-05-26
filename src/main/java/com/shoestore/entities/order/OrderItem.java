@@ -7,5 +7,5 @@ import javax.persistence.Entity;
 
 @Data
 @Entity
-public abstract class OrderItem  extends BaseIdEntity {
+public class OrderItem  extends BaseIdEntity {
 }

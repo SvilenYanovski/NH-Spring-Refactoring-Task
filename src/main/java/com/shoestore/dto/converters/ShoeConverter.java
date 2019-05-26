@@ -34,12 +34,13 @@ public class ShoeConverter implements BaseConverter<ShoeDTO, Shoe>{
 
             List<Photo> photos = shoeDTO.getPhotos()
                     .stream()
-                    .map(photoRepository::findPhotoByUrl)
+                    .map(o->photoRepository.findPhotoByUrl(o).orElse(null))
                     .collect(Collectors.toList());
             shoe.setPhotos(photos);
             return shoe;
         }
     }
+
     @Override
     public Shoe fromId(Long id) {
         if (id == null) {

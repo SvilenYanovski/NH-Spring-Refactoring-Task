@@ -13,7 +13,6 @@ import com.shoestore.entities.shoe.Shoe;
 import com.shoestore.entities.shoe.ShoeSize;
 import com.shoestore.repositories.ShoeInventoryRepository;
 import com.shoestore.services.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.shoestore.constants.Constants.*;

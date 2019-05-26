@@ -1,14 +1,13 @@
 package com.shoestore.services;
 
-import com.shoestore.entities.order.Order;
+import com.shoestore.dto.GenericResponseDTO;
+import com.shoestore.dto.OrderDTO;
 import com.shoestore.entities.shoe.ShoePair;
 
-import javax.websocket.server.PathParam;
-
 public interface OrderService {
-    Order getOrder(long shopperId);
-    Double getTotalPrice(long shopperId);
-    Order addShoePair(long shopperId, ShoePair shoePair);
-    Order updateShoePair(long shopperId, ShoePair shoePair);
-    Order removeShoePair(long shopperId, ShoePair shoePair);
+    OrderDTO getOrder(long shopperId);
+    GenericResponseDTO getTotalPrice(long shopperId);
+    OrderDTO addShoePair(long shopperId, ShoePair shoePair);
+    OrderDTO updateShoePair(long shopperId, ShoePair shoePair);
+    OrderDTO removeShoePair(long shopperId, ShoePair shoePair);
 }
