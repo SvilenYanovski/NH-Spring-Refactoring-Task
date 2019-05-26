@@ -1,5 +1,7 @@
 package com.shoestore.services.impl;
 
+import com.shoestore.dto.ShoeDTO;
+import com.shoestore.dto.converters.ShoeConverter;
 import com.shoestore.entities.shoe.Shoe;
 import com.shoestore.repositories.ShoeRepository;
 import com.shoestore.services.ShoeService;
@@ -11,13 +13,15 @@ import java.util.List;
 public class ShoeServiceImpl implements ShoeService {
 
     private final ShoeRepository shoeRepository;
+    private final ShoeConverter shoeConverter;
 
-    public ShoeServiceImpl(ShoeRepository shoeRepository) {
+    public ShoeServiceImpl(ShoeRepository shoeRepository, ShoeConverter shoeConverter) {
         this.shoeRepository = shoeRepository;
+        this.shoeConverter = shoeConverter;
     }
 
     @Override
-    public List<Shoe> getAll() {
-        return shoeRepository.findAll();
+    public List<ShoeDTO> getAll() {
+        return shoeConverter.shoesToShoeDTOs(shoeRepository.findAll());
     }
 }

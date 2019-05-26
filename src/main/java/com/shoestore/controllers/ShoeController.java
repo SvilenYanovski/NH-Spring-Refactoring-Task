@@ -1,5 +1,6 @@
 package com.shoestore.controllers;
 
+import com.shoestore.dto.ShoeDTO;
 import com.shoestore.entities.shoe.Shoe;
 import com.shoestore.services.ShoeService;
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +25,7 @@ public class ShoeController {
     }
 
     @GetMapping("/all")
-    List<Shoe> all() {
+    List<ShoeDTO> all() {
         LOGGER.info("Fetching all shoes.");
         return shoeService.getAll();
     }
