@@ -1,11 +1,3 @@
-## Intro
-
-Welcome to one of the [hacker.works][hacker.works] work sample tests!
-
-Our experience shows that the best predictor of whether you are going to perform at [hacker.works][hacker.works] is a work sample test. We give you a sample piece of work, similar to what you will do in the job and assess the results you produce.
-
-Check the **setup instruction**, carefully read the **test objectives** below and good luck!
-
 ## Setup Instructions
 
 #### 1. Clone the project.
@@ -49,19 +41,3 @@ The objective of this work sample test is to clean this dirty code:
 Keep in mind, we're not imposing any restrictions on keeping the functionality, method interfaces, dependencies, etc. Feel free to upgrade to Java 8 and update the project dependencies and configuration as you wish. 
 
 Be creative! Take your time.
-
-## How to submit your solution?
-
-> **NOTE:** The work sample test is in a public repository! We kindly ask you to **DO NOT ATTEMPT** to create [pull request][github.pull] in GitHub or fork and publish your solution online! Please, take into consideration the other candidates!
-
-To submit your solution:
-
-1. Commit your changes to the git repository cloned locally on your machine.
-2. Prepare and archive of repository - either **zip** or **tar.gz**.
-3. Send your archive to [jobs@hacker.works][jobs-mailto].
-
-We'll let you know, as soon as we start reviewing your solution.
-
-[hacker.works]: http://hacker.works
-[github.pull]: https://github.com/hacker-works/fsh.dirty-code.wst.01/pulls
-[jobs-mailto]: mailto:jobs@hacker.works
